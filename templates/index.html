@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BG.Remover By New Tech Softs | Pro AI Background Remover</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="logo">
+                <div class="logo-icon">BG</div>
+                <span>BG.REMOVER</span>
+            </a>
+            <nav class="nav-links">
+                <a href="#hero">Upload</a>
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How it Works</a>
+               <a href="https://www.newtechsofts.com/"> <button class="btn-login">Get New Tools ✦</button> </a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero">
+            <div class="orb-1 hero-orb"></div>
+            <div class="orb-2 hero-orb"></div>
+            <div class="orb-3 hero-orb"></div>
+
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    AI-Powered · Free · Instant
+                </div>
+
+                <h1>Remove <span class="gradient-text">Backgrounds</span><br>in Seconds.</h1>
+                <p>100% Automatic and Free. Perfect for designers, photographers, and e-commerce brands.</p>
+
+                <div class="upload-wrapper">
+                    <div class="upload-area" id="dropZone">
+                        <div class="upload-placeholder">
+                            <div class="icon-circle">
+                                <i class="fas fa-cloud-arrow-up"></i>
+                            </div>
+                            <h3>Drag & Drop your image</h3>
+                            <p>or click below to browse from device</p>
+                            <label for="imageUpload" class="btn-primary">
+                                <i class="fas fa-folder-open" style="margin-right:8px"></i>Choose Image
+                            </label>
+                            <input type="file" id="imageUpload" hidden accept="image/*">
+                            <div class="upload-formats">
+                                <span class="fmt-tag">PNG</span>
+                                <span class="fmt-tag">JPG</span>
+                                <span class="fmt-tag">WEBP</span>
+                                <span class="fmt-tag">BMP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <span class="stat-num" data-count="2M">0</span>
+                        <span class="stat-label">Images Processed</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-num">&lt;3s</span>
+                        <span class="stat-label">Avg. Processing</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-num">100%</span>
+                        <span class="stat-label">Free Forever</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Editor Section -->
+        <section id="editor" class="editor-section" style="display: none;">
+            <div class="editor-container">
+                <!-- Sidebar -->
+                <aside class="editor-sidebar">
+                    <div>
+                        <p class="sidebar-section-title">Background</p>
+                        <div class="color-grid">
+                            <button class="color-btn transparent active" onclick="setBG('transparent', this)" title="Transparent"></button>
+                            <button class="color-btn white" onclick="setBG('#ffffff', this)" title="White"></button>
+                            <button class="color-btn black" onclick="setBG('#000000', this)" title="Black"></button>
+                            <button class="color-btn blue" onclick="setBG('#2575fc', this)" title="Blue"></button>
+                            <button class="color-btn pink" onclick="setBG('#e91e63', this)" title="Pink"></button>
+                            <button class="color-btn green" onclick="setBG('#11998e', this)" title="Green"></button>
+                            <button class="color-btn yellow" onclick="setBG('#f7971e', this)" title="Yellow"></button>
+                            <label class="color-btn custom" title="Custom Color">
+                                <i class="fas fa-eye-dropper"></i>
+                                <input type="color" id="customColor" oninput="setBGCustom(this.value)">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="sidebar-section-title">Actions</p>
+                        <button class="tool-btn" onclick="resetEditor()">
+                            <i class="fas fa-arrow-rotate-left"></i> Discard & Upload New
+                        </button>
+                    </div>
+
+                    <div>
+                        <button class="btn-download" onclick="downloadImage()">
+                            <i class="fas fa-download"></i> Download PNG
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- Workspace -->
+                <div class="workspace">
+                    <div class="workspace-header">
+                        <div class="tabs">
+                            <button class="tab-btn active" id="btnRemoved" onclick="showRemoved()">
+                                <i class="fas fa-wand-magic-sparkles" style="margin-right:6px;font-size:0.75rem"></i>BG Removed
+                            </button>
+                            <button class="tab-btn" id="btnOriginal" onclick="showOriginal()">
+                                Original
+                            </button>
+                        </div>
+                        <div class="workspace-meta">
+                            <span class="meta-dot"></span>
+                            Ready to download
+                        </div>
+                    </div>
+                    <div class="preview-box" id="previewBox">
+                        <div id="loader" class="loader-overlay" style="display: none;">
+                            <div class="loader-ring"></div>
+                            <p class="loader-text">Processing with AI magic...</p>
+                            <div class="loader-bar">
+                                <div class="loader-fill"></div>
+                            </div>
+                        </div>
+                        <canvas id="resultCanvas"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <div class="section-header reveal">
+                <span class="section-label">Why Us</span>
+                <h2>Built for Professionals</h2>
+                <p>Everything you need, nothing you don't.</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card reveal">
+                    <div class="f-icon-wrap"><i class="fas fa-bolt"></i></div>
+                    <h3>Lightning Fast</h3>
+                    <p>Our serverless AI engine delivers pixel-perfect results in under 3 seconds — no waiting, no queues.</p>
+                </div>
+                <div class="feature-card active reveal" style="transition-delay:0.1s">
+                    <div class="f-icon-wrap"><i class="fas fa-wand-magic-sparkles"></i></div>
+                    <h3>HD Quality Output</h3>
+                    <p>No quality loss. Razor-sharp edges even for complex hair, fur, and intricate details at full resolution.</p>
+                </div>
+                <div class="feature-card reveal" style="transition-delay:0.2s">
+                    <div class="f-icon-wrap"><i class="fas fa-shield-halved"></i></div>
+                    <h3>100% Private</h3>
+                    <p>Images are processed in memory and never stored on our servers. Your data stays yours.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section id="how-it-works" class="how-it-works">
+            <div class="section-header reveal">
+                <span class="section-label">Process</span>
+                <h2>3 Simple Steps</h2>
+                <p>From upload to download in under 10 seconds.</p>
+            </div>
+            <div class="steps-container">
+                <div class="steps-connector"></div>
+                <div class="step reveal">
+                    <div class="step-num-wrap">
+                        <span class="step-num">01</span>
+                    </div>
+                    <h4>Upload Image</h4>
+                    <p>Drag & drop or browse your device for any image format.</p>
+                </div>
+                <div class="step reveal" style="transition-delay:0.15s">
+                    <div class="step-num-wrap">
+                        <span class="step-num">02</span>
+                    </div>
+                    <h4>AI Processing</h4>
+                    <p>Our model identifies and removes the background automatically.</p>
+                </div>
+                <div class="step reveal" style="transition-delay:0.3s">
+                    <div class="step-num-wrap">
+                        <span class="step-num">03</span>
+                    </div>
+                    <h4>Customize & Download</h4>
+                    <p>Choose a background color or keep it transparent, then export.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+   <footer class="footer">
+    <div class="footer-container">
+        <!-- Brand & Description Section -->
+        <div class="footer-brand-box">
+            <div class="nts-branding">
+                <img src="https://www.newtechsofts.com/assets/logo-DbTpYI1g.png" alt="NewTechSofts Logo" class="footer-logo-nts">
+                <span class="nts-name">NewTechSofts</span>
+            </div>
+            <p class="footer-desc">
+                This product is proudly developed by <strong>NewTechSofts</strong>. We are a leading software company dedicated to building innovative digital products that facilitate businesses and individuals globally with cutting-edge technology.
+            </p>
+        </div>
+
+        <!-- Quick Links Section -->
+        <div class="footer-links-box">
+            <h4 class="footer-title">Product</h4>
+            <ul class="footer-list">
+                <li><a href="#hero">Remove Background</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How it Works</a></li>
+            </ul>
+        </div>
+
+        <!-- Social & Website Section -->
+        <div class="footer-social-box">
+            <h4 class="footer-title">Connect with Us</h4>
+            <div class="socials-grid">
+                <a href="https://www.linkedin.com/company/newtechsofts" target="_blank" class="social-icon-link" title="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://www.instagram.com/newtechsoft" target="_blank" class="social-icon-link" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/newtechsofts" target="_blank" class="social-icon-link" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.newtechsofts.com" target="_blank" class="social-icon-link" title="Official Website">
+                    <i class="fas fa-globe"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Copyright Bar -->
+    <div class="footer-bottom-bar">
+        <p>© 2024 <span class="highlight-text">BG.REMOVER</span> | All Rights Reserved.</p>
+        <p>A Premium Product by <a href="https://www.newtechsofts.com" target="_blank" class="nts-official-link">NewTechSofts</a></p>
+    </div>
+</footer>
+
+    <script>
+        /* ---- Custom Cursor ---- */
+        const dot = document.getElementById('cursorDot');
+        const ring = document.getElementById('cursorRing');
+        let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX; mouseY = e.clientY;
+            dot.style.left = mouseX + 'px';
+            dot.style.top = mouseY + 'px';
+        });
+
+        function animateRing() {
+            ringX += (mouseX - ringX) * 0.12;
+            ringY += (mouseY - ringY) * 0.12;
+            ring.style.left = ringX + 'px';
+            ring.style.top = ringY + 'px';
+            requestAnimationFrame(animateRing);
+        }
+        animateRing();
+
+        document.querySelectorAll('button, a, label, .color-btn').forEach(el => {
+            el.addEventListener('mouseenter', () => ring.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
+        });
+
+        /* ---- Scroll Reveal ---- */
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        /* ---- Drag & Drop ---- */
+        const dropZone = document.getElementById('dropZone');
+
+        dropZone.addEventListener('dragover', e => {
+            e.preventDefault();
+            dropZone.classList.add('drag-active');
+        });
+
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-active'));
+
+        dropZone.addEventListener('drop', e => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-active');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) handleFile(file);
+        });
+
+        /* ---- Core Editor Logic ---- */
+        const imageUpload = document.getElementById('imageUpload');
+        const heroSection = document.getElementById('hero');
+        const editorSection = document.getElementById('editor');
+        const canvas = document.getElementById('resultCanvas');
+        const ctx = canvas.getContext('2d');
+        const loader = document.getElementById('loader');
+
+        let originalImg = new Image();
+        let processedImg = new Image();
+        let currentBG = 'transparent';
+        let isShowingOriginal = false;
+
+        imageUpload.addEventListener('change', e => handleFile(e.target.files[0]));
+
+        async function handleFile(file) {
+            if (!file) return;
+
+            heroSection.style.display = 'none';
+            editorSection.style.display = 'block';
+            editorSection.scrollIntoView({ behavior: 'smooth' });
+            loader.style.display = 'flex';
+
+            const reader = new FileReader();
+            reader.onload = e => originalImg.src = e.target.result;
+            reader.readAsDataURL(file);
+
+            const formData = new FormData();
+            formData.append('image', file);
+
+            try {
+                const response = await fetch('/remove-bg', { method: 'POST', body: formData });
+                const data = await response.json();
+
+                processedImg.onload = () => {
+                    loader.style.display = 'none';
+                    render();
+                };
+                processedImg.src = "data:image/png;base64," + data.processed_image;
+            } catch (err) {
+                alert("Upload failed. Please check the server.");
+                resetEditor();
+            }
+        }
+
+        function render() {
+            const img = isShowingOriginal ? originalImg : processedImg;
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (currentBG !== 'transparent') {
+                ctx.fillStyle = currentBG;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+            ctx.drawImage(img, 0, 0);
+        }
+
+        function setBG(color, el) {
+            currentBG = color;
+            isShowingOriginal = false;
+            render();
+            document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+            if (el) el.classList.add('active');
+        }
+
+        function setBGCustom(color) {
+            currentBG = color;
+            isShowingOriginal = false;
+            render();
+            document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('.custom').classList.add('active');
+        }
+
+        function showOriginal() {
+            isShowingOriginal = true;
+            render();
+            document.getElementById('btnOriginal').classList.add('active');
+            document.getElementById('btnRemoved').classList.remove('active');
+        }
+
+        function showRemoved() {
+            isShowingOriginal = false;
+            render();
+            document.getElementById('btnRemoved').classList.add('active');
+            document.getElementById('btnOriginal').classList.remove('active');
+        }
+
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.download = 'bg-gone-result.png';
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+        }
+
+        function resetEditor() {
+            editorSection.style.display = 'none';
+            heroSection.style.display = 'flex';
+            imageUpload.value = '';
+            currentBG = 'transparent';
+            isShowingOriginal = false;
+            document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('.color-btn.transparent').classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
