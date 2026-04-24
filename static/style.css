@@ -922,3 +922,165 @@ canvas {
 ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(0,255,136,0.4); }
 
+/* ============================================
+   MOBILE RESPONSIVE CSS
+   Yeh sab apne style.css ke BILKUL END mein
+   paste kar do — kuch bhi change mat karna.
+   ============================================ */
+
+/* --- Tablet: 992px se neeche --- */
+@media (max-width: 992px) {
+
+    /* Navbar */
+    .nav-links a { display: none; }
+    .nav-links .btn-login { display: block; }
+    .nav-container { padding: 0 16px; }
+
+    /* Hero */
+    .hero { padding: 100px 20px 50px; }
+    .hero-content h1 { font-size: 2.8rem; letter-spacing: -1.5px; }
+    .stats-bar { gap: 24px; flex-wrap: wrap; }
+
+    /* Editor */
+    .editor-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        height: auto;
+    }
+
+    .editor-sidebar {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 20px;
+        align-items: flex-start;
+    }
+
+    .editor-sidebar > div { flex: 1; min-width: 200px; }
+    .btn-download { width: auto; padding: 14px 28px; }
+
+    /* Features */
+    .feature-grid { grid-template-columns: 1fr; gap: 16px; }
+
+    /* Steps */
+    .steps-container { flex-direction: column; align-items: center; gap: 32px; }
+    .steps-connector { display: none; }
+    .step { width: 100%; max-width: 400px; padding: 0; }
+}
+
+/* --- Mobile: 768px se neeche --- */
+@media (max-width: 768px) {
+
+    /* Navbar */
+    .nav-container { height: 60px; }
+    .logo span { font-size: 1rem; }
+    .logo-icon { width: 30px; height: 30px; font-size: 0.7rem; }
+    .btn-login { padding: 7px 14px; font-size: 0.78rem; }
+
+    /* Hero */
+    .hero { padding: 90px 16px 40px; min-height: auto; }
+    .hero-content h1 { font-size: 2.2rem; letter-spacing: -1px; line-height: 1.1; }
+    .hero-content > p { font-size: 0.95rem; margin-bottom: 32px; }
+
+    /* Hero Orbs - chote karo mobile pe */
+    .orb-1 { width: 280px; height: 280px; }
+    .orb-2 { width: 180px; height: 180px; right: -40px; }
+    .orb-3 { width: 150px; height: 150px; left: -30px; }
+
+    /* Upload Area */
+    .upload-area { padding: 36px 20px; border-radius: 20px; }
+    .icon-circle { width: 56px; height: 56px; font-size: 1.2rem; }
+    .upload-placeholder h3 { font-size: 1rem; }
+    .upload-placeholder p { font-size: 0.82rem; }
+    .btn-primary { padding: 11px 28px; font-size: 0.88rem; }
+
+    /* Stats Bar */
+    .stats-bar { gap: 16px; margin-top: 36px; }
+    .stat-num { font-size: 1.3rem; }
+    .stat-label { font-size: 0.7rem; }
+    .stat-divider { height: 28px; }
+
+    /* Editor Section */
+    .editor-section { padding: 16px; margin-top: 70px; }
+
+    .editor-container {
+        height: auto;
+        gap: 14px;
+    }
+
+    .editor-sidebar {
+        flex-direction: column;
+        padding: 20px;
+        border-radius: 18px;
+        gap: 20px;
+    }
+
+    .editor-sidebar > div { min-width: unset; width: 100%; }
+
+    .color-grid { grid-template-columns: repeat(8, 1fr); gap: 8px; }
+    .color-btn { border-radius: 8px; }
+
+    .tool-btn { font-size: 0.82rem; padding: 10px 14px; }
+    .btn-download { width: 100%; padding: 14px; font-size: 0.92rem; border-radius: 14px; }
+
+    .workspace { border-radius: 18px; min-height: 380px; }
+    .workspace-header { padding: 12px 16px; }
+    .tab-btn { padding: 7px 14px; font-size: 0.78rem; }
+
+    .preview-box { padding: 20px; }
+
+    /* Features */
+    .features { padding: 70px 16px; }
+    .section-header h2 { font-size: 1.9rem; }
+    .feature-card { padding: 28px 22px; border-radius: 18px; }
+    .feature-card h3 { font-size: 1rem; }
+
+    /* How It Works */
+    .how-it-works { padding: 70px 16px; }
+    .step-num-wrap { width: 64px; height: 64px; border-radius: 16px; }
+    .step-num { font-size: 1.2rem; }
+    .step h4 { font-size: 0.95rem; }
+
+    /* Footer */
+    .footer { padding: 60px 16px 24px; }
+    .footer-bottom-bar { font-size: 0.78rem; }
+}
+
+/* --- Small Mobile: 480px se neeche --- */
+@media (max-width: 480px) {
+
+    /* Hero */
+    .hero-content h1 { font-size: 1.85rem; }
+    .hero-badge { font-size: 0.68rem; padding: 5px 12px; }
+
+    /* Stats - vertical stack on very small screens */
+    .stats-bar {
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+    }
+    .stat-divider { width: 40px; height: 1px; }
+
+    /* Upload */
+    .upload-area { padding: 28px 16px; }
+    .upload-formats { gap: 6px; }
+    .fmt-tag { font-size: 0.65rem; padding: 3px 8px; }
+
+    /* Color Grid - 4 per row on small screens */
+    .color-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; }
+
+    /* Navbar - extra small */
+    .logo span { display: none; } /* sirf icon dikhao */
+
+    /* Features */
+    .features { padding: 50px 12px; }
+    .how-it-works { padding: 50px 12px; }
+    .section-header h2 { font-size: 1.65rem; }
+}
+
+/* --- Custom Cursor: Mobile pe band karo (touch devices) --- */
+@media (hover: none) and (pointer: coarse) {
+    .cursor-dot, .cursor-ring { display: none !important; }
+    body { cursor: auto; }
+    .btn-login, .btn-primary, .btn-download, .tool-btn,
+    .color-btn, .custom input, .tab-btn { cursor: pointer; }
+}
